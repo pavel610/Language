@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-struct Card {
-    let title: String
-    let image: UIImage
+struct Word {
+    let spelling: String
+    let translation: String
 }
 

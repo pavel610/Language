@@ -9,10 +9,22 @@ import UIKit
 
 class CardViewController: UIViewController {
     
-    let cards: [Card] = [
-        Card(title: "Card 1", image: UIImage(named: "image1")!),
-        Card(title: "Card 2", image: UIImage(named: "image2")!),
-        Card(title: "Card 3", image: UIImage(named: "image3")!)
+    @IBOutlet weak var repeatLabel: UILabel!
+    @IBOutlet weak var remeberLabel: UILabel!
+    lazy private var ifEmptyLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Все выучено"
+        label.textAlignment = .center
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.isHidden = true
+        return label
+    }()
+    
+    let cards: [Word] = [
+        Word(spelling: "hello", translation: "Привет"),
+        Word(spelling: "bye", translation: "Пока")
     ]
     
     var cardViews: [CardView] = []
@@ -22,6 +34,7 @@ class CardViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCards()
+        setupIfEmptyLabel()
     }
     
     private func setupCards() {
@@ -34,8 +47,8 @@ class CardViewController: UIViewController {
             NSLayoutConstraint.activate([
                 cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-                cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6)
+                cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
             ])
             
             cardViews.append(cardView)
@@ -43,6 +56,17 @@ class CardViewController: UIViewController {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
             cardView.addGestureRecognizer(panGesture)
         }
+    }
+    
+    private func setupIfEmptyLabel() {
+        view.addSubview(ifEmptyLabel)
+        
+        NSLayoutConstraint.activate([
+            ifEmptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            ifEmptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            ifEmptyLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            ifEmptyLabel.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
@@ -56,15 +80,26 @@ class CardViewController: UIViewController {
             cardView.center = CGPoint(x: center.x + translation.x, y: center.y + translation.y)
             let rotation = translation.x / view.bounds.width * 0.3
             cardView.transform = CGAffineTransform(rotationAngle: rotation)
+            if translation.x < -50 {
+                self.repeatLabel.textColor = .peach
+                self.remeberLabel.textColor = .black
+            } else if translation.x > 50{
+                self.remeberLabel.textColor = .peach
+                self.repeatLabel.textColor = .black
+            } else {
+                self.repeatLabel.textColor = .black
+                self.remeberLabel.textColor = .black
+            }
         case .ended:
-            if translation.x > 100 {
+            if translation.x > 70 {
                 UIView.animate(withDuration: 0.3, animations: {
                     cardView.center = CGPoint(x: translation.x > 0 ? self.view.bounds.width * 2 : -self.view.bounds.width * 2, y: center.y + translation.y)
                 }) { _ in
                     cardView.removeFromSuperview()
                     self.cardViews.removeAll(where: { $0 == cardView })
+                    self.checkIfEmpty()
                 }
-            } else if translation.x < -100{
+            } else if translation.x < -70{
                 UIView.animate(withDuration: 0.3, animations: {
                     cardView.center = CGPoint(x: translation.x > 0 ? self.view.bounds.width * 2 : -self.view.bounds.width * 2, y: center.y + translation.y)
                 }) { _ in
@@ -73,6 +108,7 @@ class CardViewController: UIViewController {
                     self.cardViews.removeAll(where: { $0 == cardView })
                     self.cardViews.insert(cardView, at: 0)
                     self.repositionCards()
+                    self.checkIfEmpty()
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {
@@ -80,6 +116,8 @@ class CardViewController: UIViewController {
                     cardView.transform = .identity
                 }
             }
+            self.repeatLabel.textColor = .black
+            self.remeberLabel.textColor = .black
         default:
             UIView.animate(withDuration: 0.3) {
                 cardView.center = center
@@ -90,21 +128,28 @@ class CardViewController: UIViewController {
     }
     
     private func repositionCards() {
-            for (index, cardView) in cardViews.enumerated() {
-                view.addSubview(cardView)
-                
-                NSLayoutConstraint.activate([
-                    cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                    cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-                    cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6)
-                ])
-                
-                if index == cardViews.count - 1 {
-                    let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-                    cardView.addGestureRecognizer(panGesture)
-                }
+        for (index, cardView) in cardViews.enumerated() {
+            view.addSubview(cardView)
+            
+            NSLayoutConstraint.activate([
+                cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+            ])
+            
+            if index == cardViews.count - 1 {
+                let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+                cardView.addGestureRecognizer(panGesture)
             }
         }
+    }
     
+    private func checkIfEmpty() {
+        if cardViews.isEmpty {
+            ifEmptyLabel.isHidden = false
+        } else {
+            ifEmptyLabel.isHidden = true
+        }
+    }
 }

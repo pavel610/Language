@@ -9,8 +9,9 @@ import UIKit
 
 class CardView: UIView {
     
-    let imageView = UIImageView()
-    let titleLabel = UILabel()
+    private lazy var spellingLabel = UILabel()
+    private lazy var translationLabel = UILabel()
+    private var isFlipped = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,15 @@ class CardView: UIView {
     }
     
     private func setupView() {
+        spellingLabel.textAlignment = .center
+        translationLabel.textAlignment = .center
+        spellingLabel.font = UIFont.systemFont(ofSize: 24)
+        translationLabel.font = UIFont.systemFont(ofSize: 24)
+                
+        spellingLabel.frame = self.bounds
+        translationLabel.frame = self.bounds
+        translationLabel.isHidden = true
+        
         layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         layer.cornerRadius = 10
         layer.shadowColor = UIColor.black.cgColor
@@ -29,31 +39,36 @@ class CardView: UIView {
         layer.shadowOffset = CGSize(width: 0, height: 5)
         layer.shadowRadius = 10
         
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 10
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageView)
+        spellingLabel.translatesAutoresizingMaskIntoConstraints = false
+        spellingLabel.textAlignment = .center
+        addSubview(spellingLabel)
         
-        titleLabel.textAlignment = .center
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(titleLabel)
+        translationLabel.textAlignment = .center
+        translationLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(translationLabel)
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
+            spellingLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spellingLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 50)
+            translationLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            translationLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flipCard))
+        self.addGestureRecognizer(tapGesture)
     }
     
-    func configure(with card: Card) {
-        imageView.image = card.image
-        titleLabel.text = card.title
+    func configure(with word: Word) {
+        spellingLabel.text = word.spelling
+        translationLabel.text = word.translation
+    }
+    
+    @objc private func flipCard() {
+        let toView = isFlipped ? spellingLabel : translationLabel
+        let fromView = isFlipped ? translationLabel : spellingLabel
+        
+        UIView.transition(from: fromView, to: toView, duration: 0.5, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        
+        isFlipped.toggle()
     }
 }

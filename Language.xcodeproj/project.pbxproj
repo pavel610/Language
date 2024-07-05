@@ -11,7 +11,7 @@
 		AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */; };
 		AA0A58CA2C36F9FC006EC9CE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA0A58C92C36F9FC006EC9CE /* FirebaseAuth */; };
 		AA1D16512C368E2C0063BC08 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16502C368E2C0063BC08 /* CardView.swift */; };
-		AA1D16532C368EE50063BC08 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16522C368EE50063BC08 /* Card.swift */; };
+		AA1D16532C368EE50063BC08 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16522C368EE50063BC08 /* Word.swift */; };
 		AA1D165B2C3691570063BC08 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D165A2C3691570063BC08 /* CardViewController.swift */; };
 		AA1D165F2C3699A00063BC08 /* CardView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1D165E2C3699A00063BC08 /* CardView.storyboard */; };
 		AAAE3C622C3593110026A351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C612C3593110026A351 /* AppDelegate.swift */; };
@@ -20,13 +20,14 @@
 		AAAE3C692C3593110026A351 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = AAAE3C682C3593110026A351 /* Base */; };
 		AAAE3C6B2C3593130026A351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAAE3C6A2C3593130026A351 /* Assets.xcassets */; };
 		AAAE3C6E2C3593130026A351 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = AAAE3C6D2C3593130026A351 /* Base */; };
+		AAF5CFBB2C37F32A00013D3C /* YandexDictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF5CFBA2C37F32A00013D3C /* YandexDictManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsManager.swift; sourceTree = "<group>"; };
 		AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA1D16502C368E2C0063BC08 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		AA1D16522C368EE50063BC08 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		AA1D16522C368EE50063BC08 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		AA1D165A2C3691570063BC08 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		AA1D165E2C3699A00063BC08 /* CardView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CardView.storyboard; sourceTree = "<group>"; };
 		AAAE3C5E2C3593110026A351 /* Language.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Language.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +38,7 @@
 		AAAE3C6A2C3593130026A351 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AAAE3C6D2C3593130026A351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAAE3C6F2C3593130026A351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AAF5CFBA2C37F32A00013D3C /* YandexDictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YandexDictManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,13 +80,13 @@
 		AAAE3C602C3593110026A351 /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				AA1D16522C368EE50063BC08 /* Card.swift */,
+				AAF5CFB92C37F2FE00013D3C /* Managers */,
+				AA1D16522C368EE50063BC08 /* Word.swift */,
 				AA1D16502C368E2C0063BC08 /* CardView.swift */,
 				AAAE3C612C3593110026A351 /* AppDelegate.swift */,
 				AAAE3C632C3593110026A351 /* SceneDelegate.swift */,
 				AAAE3C652C3593110026A351 /* ViewController.swift */,
 				AA1D165A2C3691570063BC08 /* CardViewController.swift */,
-				AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */,
 				AAAE3C672C3593110026A351 /* Main.storyboard */,
 				AAAE3C6C2C3593130026A351 /* LaunchScreen.storyboard */,
 				AA1D165E2C3699A00063BC08 /* CardView.storyboard */,
@@ -93,6 +95,15 @@
 				AAAE3C6A2C3593130026A351 /* Assets.xcassets */,
 			);
 			path = Language;
+			sourceTree = "<group>";
+		};
+		AAF5CFB92C37F2FE00013D3C /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */,
+				AAF5CFBA2C37F32A00013D3C /* YandexDictManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,8 +185,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA1D16532C368EE50063BC08 /* Card.swift in Sources */,
+				AA1D16532C368EE50063BC08 /* Word.swift in Sources */,
 				AA0A58C42C36C0A9006EC9CE /* WordsManager.swift in Sources */,
+				AAF5CFBB2C37F32A00013D3C /* YandexDictManager.swift in Sources */,
 				AA1D165B2C3691570063BC08 /* CardViewController.swift in Sources */,
 				AAAE3C662C3593110026A351 /* ViewController.swift in Sources */,
 				AAAE3C622C3593110026A351 /* AppDelegate.swift in Sources */,
