@@ -13,34 +13,23 @@ class AuthorizationViewController: UIViewController {
         willSet {
             if newValue {
                 titleLabel.text = "Регистрация"
-                userNameTextfield.isHidden
-                = false
-                subtitleLabel.text = "У вас уже есть аккаунт?"
-                changeButton.setTitle("вход", for: .normal)
+                userNameTextfield.isHidden = false
+                changeButton.setTitle("Уже есть аккаунт? Войти", for: .normal)
                 loginButton.setTitle("Зарегистрироваться", for: .normal)
             } else {
                 titleLabel.text = "Вход"
                 userNameTextfield.isHidden = true
-                subtitleLabel.text = "У вас нет аккаунта?"
-                changeButton.setTitle("Зарегистрироваться", for: .normal)
+                changeButton.setTitle("У вас нет аккаунта? Зарегистрироваться", for: .normal)
                 loginButton.setTitle("Войти", for: .normal)
             }
         }
     }
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var userInfoStackView: UIStackView!
-    
     @IBOutlet weak var registerStackView: UIStackView!
-    
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
-    
     @IBOutlet weak var emailLabel: UILabel!
-    
-    @IBOutlet weak var subtitleLabel: UILabel!
-    
-    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -57,7 +46,6 @@ class AuthorizationViewController: UIViewController {
                 self.userInfoStackView.isHidden = false
                 self.changeButton.isHidden = true
                 self.loginButton.isHidden = true
-                self.subtitleLabel.isHidden = true
                 self.titleLabel.text = "Профиль"
                 self.usernameLabel.text = "username: \(user.displayName ?? "Error name")"
                 self.emailLabel.text = "Email: \(user.email ?? "Error email")"
@@ -66,7 +54,6 @@ class AuthorizationViewController: UIViewController {
                 self.userInfoStackView.isHidden = true
                 self.changeButton.isHidden = false
                 self.loginButton.isHidden = false
-                self.subtitleLabel.isHidden = false
                 self.signUp = false
             }
         }
@@ -91,13 +78,9 @@ class AuthorizationViewController: UIViewController {
     }
 }
 
-
-
 extension AuthorizationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         sendRequestToFireBase()
-        
         return true
     }
     
@@ -149,24 +132,24 @@ extension AuthorizationViewController: UITextFieldDelegate {
     
     private func showFailAlert() {
         let alert = UIAlertController(title: "Ошибка", message: "Заполните все поля", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        alert.addAction(UIAlertAction(title: "OК", style: .default))
         present(alert, animated: true)
     }
     private func showFailRegisterAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Неправельные данные для регистрации", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        let alert = UIAlertController(title: "Ошибка", message: "Неверные данные для регистрации", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OК", style: .default))
         present(alert, animated: true)
     }
     
     private func showSuccessAlert() {
         let alert = UIAlertController(title: "Авторизация прошла успешно", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        alert.addAction(UIAlertAction(title: "OК", style: .default))
         present(alert, animated: true)
     }
     
     private func showEmptyAlert() {
         let alert = UIAlertController(title: "Ошибка", message: "Заполните все поля", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        alert.addAction(UIAlertAction(title: "OК", style: .default))
         present(alert, animated: true)
     }
 }

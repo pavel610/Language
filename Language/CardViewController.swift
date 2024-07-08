@@ -95,8 +95,8 @@ class CardViewController: UIViewController {
         }
     }
     private func showAuthorizationAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Пожалуйста авторизируйтесь!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default) {_ in 
+        let alert = UIAlertController(title: "Ошибка", message: "Войдите в аккаунт, чтобы продолжить", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default) {_ in
             self.tabBarController?.selectedIndex = 2
         })
         present(alert, animated: true)

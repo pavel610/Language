@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		952592312C3C4CD5000BB049 /* AuthoriezationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9525922E2C3C4CD5000BB049 /* AuthoriezationViewController.swift */; };
+		952592312C3C4CD5000BB049 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9525922E2C3C4CD5000BB049 /* AuthorizationViewController.swift */; };
 		952592332C3C4EB0000BB049 /* AuthorizationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 952592322C3C4EB0000BB049 /* AuthorizationViewController.storyboard */; };
 		AA0A58C42C36C0A9006EC9CE /* WordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A58C32C36C0A9006EC9CE /* WordManager.swift */; };
 		AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */; };
@@ -31,7 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9525922E2C3C4CD5000BB049 /* AuthoriezationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthoriezationViewController.swift; sourceTree = "<group>"; };
+		9525922E2C3C4CD5000BB049 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		952592322C3C4EB0000BB049 /* AuthorizationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuthorizationViewController.storyboard; sourceTree = "<group>"; };
 		AA0A58C32C36C0A9006EC9CE /* WordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManager.swift; sourceTree = "<group>"; };
 		AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 				AAAE3C6F2C3593130026A351 /* Info.plist */,
 				AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */,
 				AAAE3C6A2C3593130026A351 /* Assets.xcassets */,
-				9525922E2C3C4CD5000BB049 /* AuthoriezationViewController.swift */,
+				9525922E2C3C4CD5000BB049 /* AuthorizationViewController.swift */,
 				952592322C3C4EB0000BB049 /* AuthorizationViewController.storyboard */,
 			);
 			path = Language;
@@ -208,7 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				952592312C3C4CD5000BB049 /* AuthoriezationViewController.swift in Sources */,
+				952592312C3C4CD5000BB049 /* AuthorizationViewController.swift in Sources */,
 				AA1D16532C368EE50063BC08 /* Word.swift in Sources */,
 				AA4A280B2C3BDBB700AAB738 /* WordsViewController.swift in Sources */,
 				AA4A280D2C3BDBEB00AAB738 /* NewWordsViewController.swift in Sources */,
