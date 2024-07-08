@@ -9,6 +9,17 @@ import UIKit
 import Firebase
 
 class AuthorizationViewController: UIViewController {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var userInfoStackView: UIStackView!
+    @IBOutlet weak var registerStackView: UIStackView!
+    @IBOutlet weak var changeButton: UIButton!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var userNameTextfield: UITextField!
     var signUp: Bool = true {
         willSet {
             if newValue {
@@ -24,16 +35,7 @@ class AuthorizationViewController: UIViewController {
             }
         }
     }
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var userInfoStackView: UIStackView!
-    @IBOutlet weak var registerStackView: UIStackView!
-    @IBOutlet weak var changeButton: UIButton!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var userNameTextfield: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         userNameTextfield.delegate = self
@@ -90,7 +92,7 @@ extension AuthorizationViewController: UITextFieldDelegate {
         guard let password = passwordTextField.text else { return }
         
         if signUp {
-            if name.isEmpty || email.isEmpty || password.isEmpty {
+            if name.isEmpty && email.isEmpty && password.isEmpty {
                 showEmptyAlert()
             } else {
                 Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error  in
@@ -109,7 +111,7 @@ extension AuthorizationViewController: UITextFieldDelegate {
                 }
             }
         } else {
-            if email.isEmpty || password.isEmpty {
+            if email.isEmpty && password.isEmpty {
                 showEmptyAlert()
             } else {
                 Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
