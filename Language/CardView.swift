@@ -25,6 +25,8 @@ class CardView: UIView {
     private func setupView() {
         spellingLabel.textAlignment = .center
         translationLabel.textAlignment = .center
+        spellingLabel.textColor = .black
+        translationLabel.textColor = .black
         spellingLabel.font = UIFont.systemFont(ofSize: 24)
         translationLabel.font = UIFont.systemFont(ofSize: 24)
                 

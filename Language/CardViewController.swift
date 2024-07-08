@@ -22,10 +22,7 @@ class CardViewController: UIViewController {
         return label
     }()
     
-    let cards: [Word] = [
-        Word(spelling: "hello", translation: "Привет"),
-        Word(spelling: "bye", translation: "Пока")
-    ]
+    
     
     var cardViews: [CardView] = []
     var currentCardIndex = 0
@@ -33,28 +30,58 @@ class CardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupCards()
+        loadCards()
         setupIfEmptyLabel()
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNewWordNotification(_:)), name: .didAddNewWord, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDeleteWordsNotification), name: .didDeleteWords, object: nil)
     }
     
-    private func setupCards() {
-        for card in cards.reversed() {
-            let cardView = CardView()
-            cardView.configure(with: card)
-            cardView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(cardView)
-            
-            NSLayoutConstraint.activate([
-                cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-                cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
-            ])
-            
-            cardViews.append(cardView)
-            
-            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-            cardView.addGestureRecognizer(panGesture)
+    @objc private func didReceiveDeleteWordsNotification() {
+        cardViews.forEach { $0.removeFromSuperview() }
+        cardViews.removeAll()
+        checkIfEmpty()
+    }
+    
+    @objc private func didReceiveNewWordNotification(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let word = userInfo["word"] as? Word else { return }
+        addCard(with: word)
+    }
+    
+    private func addCard(with word: Word) {
+        let cardView = CardView()
+        cardView.configure(with: word)
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cardView)
+        
+        NSLayoutConstraint.activate([
+            cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            cardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            cardView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+        ])
+        
+        cardViews.append(cardView)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        cardView.addGestureRecognizer(panGesture)
+        
+        checkIfEmpty()
+    }
+    
+    private func loadCards() {
+            WordManager.shared.loadWords { [weak self] result in
+                switch result {
+                case .success(let words):
+                    self?.setupCards(with: words)
+                case .failure(let error):
+                    print("Failed to load words: \(error.localizedDescription)")
+                }
+            }
+        }
+    
+    private func setupCards(with words: [Word]) {
+        for word in words.reversed() {
+            addCard(with: word)
         }
     }
     

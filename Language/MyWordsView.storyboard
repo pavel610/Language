@@ -3,6 +3,7 @@
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,21 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dg4-7n-Vq8">
-                                <rect key="frame" x="8" y="103" width="414" height="701"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Dg4-7n-Vq8">
+                                <rect key="frame" x="0.0" y="103" width="430" height="746"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="701" id="8tv-U5-V73"/>
-                                    <constraint firstAttribute="width" constant="377" id="BoM-9Z-uZa"/>
-                                </constraints>
+                                <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TableCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="55" id="7em-34-c9P" customClass="TableCell" customModule="Language" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="430" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7em-34-c9P" id="CTh-IR-fBF" customClass="TableCell" customModule="Language" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UhC-3U-8IV">
@@ -64,9 +61,10 @@
                                                 <constraint firstItem="06p-bA-s1Q" firstAttribute="leading" secondItem="CTh-IR-fBF" secondAttribute="leading" id="xSV-GU-Hm1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="TranslateLabel" destination="UhC-3U-8IV" id="PK4-Co-PYR"/>
-                                            <outlet property="WordLabel" destination="06p-bA-s1Q" id="BVR-7c-8Yy"/>
+                                            <outlet property="translateLabel" destination="UhC-3U-8IV" id="PK4-Co-PYR"/>
+                                            <outlet property="wordLabel" destination="06p-bA-s1Q" id="BVR-7c-8Yy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -75,9 +73,10 @@
                         <viewLayoutGuide key="safeArea" id="HrR-gT-OEn"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Dg4-7n-Vq8" firstAttribute="top" secondItem="HrR-gT-OEn" secondAttribute="top" id="4G1-GF-ZRP"/>
-                            <constraint firstItem="Dg4-7n-Vq8" firstAttribute="leading" secondItem="HrR-gT-OEn" secondAttribute="leading" constant="8" id="B2A-EE-pq8"/>
-                            <constraint firstItem="HrR-gT-OEn" firstAttribute="trailing" secondItem="Dg4-7n-Vq8" secondAttribute="trailing" constant="8" id="MB5-cK-D3U"/>
+                            <constraint firstItem="Dg4-7n-Vq8" firstAttribute="leading" secondItem="HrR-gT-OEn" secondAttribute="leading" id="B2A-EE-pq8"/>
+                            <constraint firstItem="Dg4-7n-Vq8" firstAttribute="top" secondItem="HrR-gT-OEn" secondAttribute="top" id="LkH-Zu-85b"/>
+                            <constraint firstItem="HrR-gT-OEn" firstAttribute="trailing" secondItem="Dg4-7n-Vq8" secondAttribute="trailing" id="MB5-cK-D3U"/>
+                            <constraint firstItem="HrR-gT-OEn" firstAttribute="bottom" secondItem="Dg4-7n-Vq8" secondAttribute="bottom" id="R8K-J0-sjB"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -116,9 +115,11 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Напишите новое слово" textAlignment="center" minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="pyD-bh-EU0">
                                 <rect key="frame" x="60" y="288" width="309" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="kZo-86-hoZ"/>
                                 </constraints>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -131,7 +132,7 @@
                                     <constraint firstAttribute="height" constant="35" id="lt8-Tt-JlZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ik-eb-MP8">
@@ -164,8 +165,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="TIb-24-294"/>
                     <connections>
-                        <outlet property="DoneButton" destination="5ik-eb-MP8" id="NE5-xy-9c8"/>
-                        <outlet property="TranslateLabel" destination="lSU-zv-Q7B" id="ac6-ci-x8J"/>
+                        <outlet property="doneButton" destination="5ik-eb-MP8" id="NE5-xy-9c8"/>
+                        <outlet property="translateLabel" destination="lSU-zv-Q7B" id="ac6-ci-x8J"/>
                         <outlet property="wordTextField" destination="pyD-bh-EU0" id="hxx-zF-TgS"/>
                     </connections>
                 </viewController>
@@ -182,6 +183,14 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gha-wV-Pru">
                         <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="peach"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" name="peach"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -198,6 +207,9 @@
         <image name="eraser" catalog="system" width="128" height="119"/>
         <image name="pencil.line" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <namedColor name="peach">
+            <color red="0.87058823529411766" green="0.57647058823529407" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

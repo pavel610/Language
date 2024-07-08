@@ -7,12 +7,13 @@
 
 import UIKit
 
-class WordsViewController: UIViewController, NewWordsViewController.NewWordDelegate {
+class WordsViewController: UIViewController, NewWordDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var DeleteWordsButton: UIBarButtonItem!
     @IBOutlet weak var NewWordButton: UIBarButtonItem!
+    private let wordManager = WordManager.shared
 
     // MARK: - Properties
     var dataSource: [Word] = []
@@ -29,8 +30,10 @@ class WordsViewController: UIViewController, NewWordsViewController.NewWordDeleg
     // MARK: - Actions
     @IBAction func DeleteWordsButtonTapped(_ sender: Any) {
         dataSource = []
-        saveWords()
+        wordManager.words = []
+        wordManager.saveWordsToUserDefaults()
         tableView.reloadData()
+        NotificationCenter.default.post(name: .didDeleteWords, object: nil)
     }
 
     @IBAction func NewWordButtonTapped(_ sender: Any) {
@@ -51,18 +54,21 @@ class WordsViewController: UIViewController, NewWordsViewController.NewWordDeleg
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        saveWords()
-    }
-
-    func saveWords() {
-        guard let data = try? JSONEncoder().encode(dataSource) else { return }
-        UserDefaults.standard.set(data, forKey: "Words")
+        NotificationCenter.default.post(name: .didAddNewWord, object: nil, userInfo: ["word": word])
     }
 
     func loadWords() {
-        guard let data = UserDefaults.standard.data(forKey: "Words"),
-              let savedWords = try? JSONDecoder().decode([Word].self, from: data) else { return }
-        dataSource = savedWords
+        wordManager.loadWords { [weak self] result in
+            switch result {
+            case .success(let words):
+                self?.dataSource = words
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to load words: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -86,4 +92,9 @@ extension WordsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
+}
+
+extension Notification.Name {
+    static let didAddNewWord = Notification.Name("didAddNewWord")
+    static let didDeleteWords = Notification.Name("didDeleteWords")
 }

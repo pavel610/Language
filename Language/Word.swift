@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Word {
+struct Word: Codable {
     let spelling: String
     let translation: String
 }

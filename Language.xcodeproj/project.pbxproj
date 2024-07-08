@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA0A58C42C36C0A9006EC9CE /* WordsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */; };
+		AA0A58C42C36C0A9006EC9CE /* WordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A58C32C36C0A9006EC9CE /* WordManager.swift */; };
 		AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */; };
 		AA0A58CA2C36F9FC006EC9CE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA0A58C92C36F9FC006EC9CE /* FirebaseAuth */; };
 		AA1D16512C368E2C0063BC08 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16502C368E2C0063BC08 /* CardView.swift */; };
 		AA1D16532C368EE50063BC08 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16522C368EE50063BC08 /* Word.swift */; };
 		AA1D165B2C3691570063BC08 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D165A2C3691570063BC08 /* CardViewController.swift */; };
 		AA1D165F2C3699A00063BC08 /* CardView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1D165E2C3699A00063BC08 /* CardView.storyboard */; };
+		AA4A28042C3BD6B700AAB738 /* MyWordsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4A28032C3BD6B700AAB738 /* MyWordsView.storyboard */; };
+		AA4A28092C3BD9D500AAB738 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A28012C3BD67C00AAB738 /* TableCell.swift */; };
+		AA4A280B2C3BDBB700AAB738 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */; };
+		AA4A280D2C3BDBEB00AAB738 /* NewWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A280C2C3BDBEB00AAB738 /* NewWordsViewController.swift */; };
+		AA4A280F2C3C004C00AAB738 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */; };
 		AAAE3C622C3593110026A351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C612C3593110026A351 /* AppDelegate.swift */; };
 		AAAE3C642C3593110026A351 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C632C3593110026A351 /* SceneDelegate.swift */; };
 		AAAE3C662C3593110026A351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C652C3593110026A351 /* ViewController.swift */; };
@@ -24,12 +29,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsManager.swift; sourceTree = "<group>"; };
+		AA0A58C32C36C0A9006EC9CE /* WordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManager.swift; sourceTree = "<group>"; };
 		AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA1D16502C368E2C0063BC08 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		AA1D16522C368EE50063BC08 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		AA1D165A2C3691570063BC08 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		AA1D165E2C3699A00063BC08 /* CardView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CardView.storyboard; sourceTree = "<group>"; };
+		AA4A28012C3BD67C00AAB738 /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		AA4A28032C3BD6B700AAB738 /* MyWordsView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyWordsView.storyboard; sourceTree = "<group>"; };
+		AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
+		AA4A280C2C3BDBEB00AAB738 /* NewWordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewWordsViewController.swift; sourceTree = "<group>"; };
 		AAAE3C5E2C3593110026A351 /* Language.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Language.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAAE3C612C3593110026A351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAAE3C632C3593110026A351 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA4A280F2C3C004C00AAB738 /* FirebaseDatabase in Frameworks */,
 				AA0A58CA2C36F9FC006EC9CE /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,11 +95,15 @@
 				AA1D16502C368E2C0063BC08 /* CardView.swift */,
 				AAAE3C612C3593110026A351 /* AppDelegate.swift */,
 				AAAE3C632C3593110026A351 /* SceneDelegate.swift */,
+				AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */,
 				AAAE3C652C3593110026A351 /* ViewController.swift */,
 				AA1D165A2C3691570063BC08 /* CardViewController.swift */,
 				AAAE3C672C3593110026A351 /* Main.storyboard */,
 				AAAE3C6C2C3593130026A351 /* LaunchScreen.storyboard */,
 				AA1D165E2C3699A00063BC08 /* CardView.storyboard */,
+				AA4A28032C3BD6B700AAB738 /* MyWordsView.storyboard */,
+				AA4A28012C3BD67C00AAB738 /* TableCell.swift */,
+				AA4A280C2C3BDBEB00AAB738 /* NewWordsViewController.swift */,
 				AAAE3C6F2C3593130026A351 /* Info.plist */,
 				AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */,
 				AAAE3C6A2C3593130026A351 /* Assets.xcassets */,
@@ -100,7 +114,7 @@
 		AAF5CFB92C37F2FE00013D3C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				AA0A58C32C36C0A9006EC9CE /* WordsManager.swift */,
+				AA0A58C32C36C0A9006EC9CE /* WordManager.swift */,
 				AAF5CFBA2C37F32A00013D3C /* YandexDictManager.swift */,
 			);
 			path = Managers;
@@ -124,6 +138,7 @@
 			name = Language;
 			packageProductDependencies = (
 				AA0A58C92C36F9FC006EC9CE /* FirebaseAuth */,
+				AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */,
 			);
 			productName = Language;
 			productReference = AAAE3C5E2C3593110026A351 /* Language.app */;
@@ -173,6 +188,7 @@
 				AAAE3C6B2C3593130026A351 /* Assets.xcassets in Resources */,
 				AAAE3C6E2C3593130026A351 /* Base in Resources */,
 				AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */,
+				AA4A28042C3BD6B700AAB738 /* MyWordsView.storyboard in Resources */,
 				AAAE3C692C3593110026A351 /* Base in Resources */,
 				AA1D165F2C3699A00063BC08 /* CardView.storyboard in Resources */,
 			);
@@ -186,10 +202,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA1D16532C368EE50063BC08 /* Word.swift in Sources */,
-				AA0A58C42C36C0A9006EC9CE /* WordsManager.swift in Sources */,
+				AA4A280B2C3BDBB700AAB738 /* WordsViewController.swift in Sources */,
+				AA4A280D2C3BDBEB00AAB738 /* NewWordsViewController.swift in Sources */,
+				AA0A58C42C36C0A9006EC9CE /* WordManager.swift in Sources */,
 				AAF5CFBB2C37F32A00013D3C /* YandexDictManager.swift in Sources */,
 				AA1D165B2C3691570063BC08 /* CardViewController.swift in Sources */,
 				AAAE3C662C3593110026A351 /* ViewController.swift in Sources */,
+				AA4A28092C3BD9D500AAB738 /* TableCell.swift in Sources */,
 				AAAE3C622C3593110026A351 /* AppDelegate.swift in Sources */,
 				AA1D16512C368E2C0063BC08 /* CardView.swift in Sources */,
 				AAAE3C642C3593110026A351 /* SceneDelegate.swift in Sources */,
@@ -432,6 +451,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AA0A58C72C36F9BF006EC9CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA0A58C72C36F9BF006EC9CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
