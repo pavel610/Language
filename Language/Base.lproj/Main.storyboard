@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lm9-p6-5qu">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="CMx-DO-J57">
+            <objects>
+                <tabBarController id="lm9-p6-5qu" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MiP-49-l8Z">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.87058823529999996" green="0.57647058819999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" name="peach"/>
+                        <color key="selectedImageTintColor" red="0.87058823529999996" green="0.57647058819999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="00c-qb-2iZ" kind="relationship" relationship="viewControllers" id="Ugl-IR-hA6"/>
+                        <segue destination="uLi-fd-ZC6" kind="relationship" relationship="viewControllers" id="UCV-ce-BQT"/>
+                        <segue destination="ic6-IA-0Xg" kind="relationship" relationship="viewControllers" id="f7Z-mb-9cf"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kwz-Vh-VJF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="82" y="-629"/>
+        </scene>
+        <!--CardView-->
+        <scene sceneID="Gow-hA-Qf6">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CardView" id="00c-qb-2iZ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="X6R-vM-9Ji"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kdt-iQ-8FO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1017" y="-693"/>
+        </scene>
+        <!--MyWordsView-->
+        <scene sceneID="HSd-87-J4A">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyWordsView" id="uLi-fd-ZC6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="pmg-A7-KxN"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lmo-21-9pv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1079" y="-497"/>
+        </scene>
+        <!--AuthorizationViewController-->
+        <scene sceneID="cDf-92-Tdw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AuthorizationViewController" id="ic6-IA-0Xg" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="LH2-fr-7sV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jpE-RH-CJU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1018" y="-359"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="peach">
+            <color red="0.87058823529411766" green="0.57647058823529407" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
