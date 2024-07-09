@@ -7,10 +7,12 @@
 
 import UIKit
 
+
 class CardViewController: UIViewController {
-    
+    private let authManager = AuthManager.shared
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var remeberLabel: UILabel!
+    
     lazy private var ifEmptyLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -22,19 +24,59 @@ class CardViewController: UIViewController {
         return label
     }()
     
-    
+//    lazy private var retryButton: UIButton = {
+//        var button = UIButton(type: .system)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.setTitle("Повторить", for: .normal)
+//        button.addTarget(self, action: #selector(retryButtonTapped), for: .touchUpInside)
+//        button.isHidden = true
+//        return button
+//    }()
+        
     
     var cardViews: [CardView] = []
     var currentCardIndex = 0
     
+    
+    //MARK: -Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        loadCards()
-        setupIfEmptyLabel()
+        
+        //setupRetryButton()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNewWordNotification(_:)), name: .didAddNewWord, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDeleteWordsNotification), name: .didDeleteWords, object: nil)
     }
+    
+//    private func setupRetryButton() {
+//        view.addSubview(retryButton)
+//        
+//        NSLayoutConstraint.activate([
+//            retryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            retryButton.topAnchor.constraint(equalTo: ifEmptyLabel.bottomAnchor, constant: 20),
+//            retryButton.widthAnchor.constraint(equalToConstant: 150),
+//            retryButton.heightAnchor.constraint(equalToConstant: 50)
+//        ])
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadCards()
+        setupIfEmptyLabel()
+        authManager.addAuthStateDidChangeListener { [weak self] user in
+            if user == nil {
+                self?.showAuthorizationAlert()
+            }
+        }
+    }
+    
+    private func showAuthorizationAlert() {
+           let alert = UIAlertController(title: "Ошибка", message: "Войдите в аккаунт, чтобы продолжить", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "ОК", style: .default) {_ in
+               self.tabBarController?.selectedIndex = 2
+           })
+           present(alert, animated: true)
+       }
     
     @objc private func didReceiveDeleteWordsNotification() {
         cardViews.forEach { $0.removeFromSuperview() }
@@ -69,15 +111,15 @@ class CardViewController: UIViewController {
     }
     
     private func loadCards() {
-            WordManager.shared.loadWords { [weak self] result in
-                switch result {
-                case .success(let words):
-                    self?.setupCards(with: words)
-                case .failure(let error):
-                    print("Failed to load words: \(error.localizedDescription)")
-                }
+        WordManager.shared.loadWords { [weak self] result in
+            switch result {
+            case .success(let words):
+                self?.setupCards(with: words)
+            case .failure(let error):
+                print("Failed to load words: \(error.localizedDescription)")
             }
         }
+    }
     
     private func setupCards(with words: [Word]) {
         for word in words.reversed() {

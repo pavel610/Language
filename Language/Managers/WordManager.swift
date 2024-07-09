@@ -1,18 +1,11 @@
-//
-//  WordsManager.swift
-//  Language
-//
-//  Created by Павел Калинин on 04.07.2024.
-//
-
-import Foundation
-import FirebaseAuth
-import FirebaseDatabase
+import UIKit
+import Firebase
+import FirebaseFirestore
 
 class WordManager {
     
     static let shared = WordManager()
-    private let database = Database.database().reference()
+    private let firestore = Firestore.firestore()
     private let userDefaults = UserDefaults.standard
     private let wordsKey = "words"
     
@@ -20,37 +13,43 @@ class WordManager {
     
     private init() {}
     
-    func loadWords(completion: @escaping (Result<[Word], Error>) -> Void) {
-        if let savedWords = userDefaults.object(forKey: wordsKey) as? Data {
-            let decoder = JSONDecoder()
-            if let loadedWords = try? decoder.decode([Word].self, from: savedWords) {
-                words = loadedWords
-                completion(.success(loadedWords))
-                return
-            }
-        }
-        
+    func loadWords(completion: @escaping (Result<[Word], Error>) -> Void) {        
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])))
             return
         }
         
-        database.child("users").child(userId).child("words").observeSingleEvent(of: .value) { snapshot in
+        firestore.collection("users").document(userId).collection("words").getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
             var loadedWords: [Word] = []
-            for child in snapshot.children {
-                if let snapshot = child as? DataSnapshot,
-                   let dict = snapshot.value as? [String: String],
-                   let spelling = dict["spelling"],
-                   let translation = dict["translation"] {
+            snapshot?.documents.forEach { document in
+                if let spelling = document.data()["spelling"] as? String,
+                   let translation = document.data()["translation"] as? String {
                     let word = Word(spelling: spelling, translation: translation)
                     loadedWords.append(word)
                 }
             }
+            print("firestore")
+
             self.words = loadedWords
             self.saveWordsToUserDefaults()
             completion(.success(loadedWords))
-        } withCancel: { error in
-            completion(.failure(error))
+            return
+        }
+        
+        if let savedWords = userDefaults.object(forKey: wordsKey) as? Data {
+            let decoder = JSONDecoder()
+            if let loadedWords = try? decoder.decode([Word].self, from: savedWords) {
+                print("userdefaults")
+                print(loadedWords)
+                words = loadedWords
+                completion(.success(loadedWords))
+                return
+            }
         }
     }
     
@@ -61,25 +60,87 @@ class WordManager {
         }
     }
     
-    func saveWordsToFirebase(completion: @escaping (Error?) -> Void) {
+    func loadWordsFromUserDefaults() {
+        if let savedWords = userDefaults.object(forKey: wordsKey) as? Data {
+            let decoder = JSONDecoder()
+            if let loadedWords = try? decoder.decode([Word].self, from: savedWords) {
+                words = loadedWords
+            }
+        }
+    }
+    
+    func saveWordsToFirestore(completion: @escaping (Error?) -> Void) {
+        print("saveWordsToFirestore")
+        print(words)
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
             return
         }
         
-        let wordsDict = words.map { ["spelling": $0.spelling, "translation": $0.translation] }
-        database.child("users").child(userId).child("words").setValue(wordsDict) { error, _ in
+        let wordsCollection = firestore.collection("users").document(userId).collection("words")
+        
+        
+        let batch = firestore.batch()
+        
+        // Добавление новых данных
+        self.words.forEach { word in
+            let docRef = wordsCollection.document()
+            batch.setData([
+                "spelling": word.spelling,
+                "translation": word.translation
+            ], forDocument: docRef)
+        }
+        
+        batch.commit { error in
             completion(error)
+        }
+        
+    }
+    
+    func deleteFirestore(completion: @escaping (Error?) -> Void) {
+        print("saveWordsToFirestore")
+        print(words)
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
+            return
+        }
+        
+        let wordsCollection = firestore.collection("users").document(userId).collection("words")
+        
+        
+        let batch = firestore.batch()
+        
+        // Добавление новых данных
+        wordsCollection.getDocuments { snapshot, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            // Удаление старых данных
+            snapshot?.documents.forEach { document in
+                batch.deleteDocument(document.reference)
+            }
         }
     }
     
     func addWord(_ word: Word) {
         words.append(word)
         saveWordsToUserDefaults()
+        saveWordsToFirestore { _ in
+            
+        }
     }
     
-    func removeWord(_ word: Word) {
-        words.removeAll { $0.spelling == word.spelling && $0.translation == word.translation }
+    func removeAll() {
+        words.removeAll ()
         saveWordsToUserDefaults()
+        saveWordsToFirestore { _ in
+            
+        }
+    }
+    
+    func clearUserDefaults() {
+        userDefaults.set(nil, forKey: wordsKey)
     }
 }

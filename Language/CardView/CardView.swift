@@ -37,9 +37,9 @@ class CardView: UIView {
         layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         layer.cornerRadius = 10
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.2
-        layer.shadowOffset = CGSize(width: 0, height: 5)
-        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.05
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 2
         
         spellingLabel.translatesAutoresizingMaskIntoConstraints = false
         spellingLabel.textAlignment = .center

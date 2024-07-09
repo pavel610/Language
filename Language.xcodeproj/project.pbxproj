@@ -10,6 +10,10 @@
 		AA0A58C42C36C0A9006EC9CE /* WordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0A58C32C36C0A9006EC9CE /* WordManager.swift */; };
 		AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */; };
 		AA0A58CA2C36F9FC006EC9CE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA0A58C92C36F9FC006EC9CE /* FirebaseAuth */; };
+		AA1922282C3D0761005F8A4B /* AuthorizationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */; };
+		AA19222A2C3D0769005F8A4B /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */; };
+		AA19222C2C3D08AB005F8A4B /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA19222B2C3D08AB005F8A4B /* AuthManager.swift */; };
+		AA19222E2C3D1593005F8A4B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AA19222D2C3D1593005F8A4B /* FirebaseFirestore */; };
 		AA1D16512C368E2C0063BC08 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16502C368E2C0063BC08 /* CardView.swift */; };
 		AA1D16532C368EE50063BC08 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D16522C368EE50063BC08 /* Word.swift */; };
 		AA1D165B2C3691570063BC08 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1D165A2C3691570063BC08 /* CardViewController.swift */; };
@@ -18,7 +22,6 @@
 		AA4A28092C3BD9D500AAB738 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A28012C3BD67C00AAB738 /* TableCell.swift */; };
 		AA4A280B2C3BDBB700AAB738 /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */; };
 		AA4A280D2C3BDBEB00AAB738 /* NewWordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4A280C2C3BDBEB00AAB738 /* NewWordsViewController.swift */; };
-		AA4A280F2C3C004C00AAB738 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */; };
 		AAAE3C622C3593110026A351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C612C3593110026A351 /* AppDelegate.swift */; };
 		AAAE3C642C3593110026A351 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C632C3593110026A351 /* SceneDelegate.swift */; };
 		AAAE3C662C3593110026A351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAE3C652C3593110026A351 /* ViewController.swift */; };
@@ -31,6 +34,9 @@
 /* Begin PBXFileReference section */
 		AA0A58C32C36C0A9006EC9CE /* WordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManager.swift; sourceTree = "<group>"; };
 		AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizationViewController.storyboard; path = "../../../Downloads/Language-auth/Language/AuthorizationViewController.storyboard"; sourceTree = "<group>"; };
+		AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		AA19222B2C3D08AB005F8A4B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		AA1D16502C368E2C0063BC08 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		AA1D16522C368EE50063BC08 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		AA1D165A2C3691570063BC08 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -55,8 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA4A280F2C3C004C00AAB738 /* FirebaseDatabase in Frameworks */,
 				AA0A58CA2C36F9FC006EC9CE /* FirebaseAuth in Frameworks */,
+				AA19222E2C3D1593005F8A4B /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +74,24 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA19222F2C3D1922005F8A4B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D16522C368EE50063BC08 /* Word.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA1922302C3D193D005F8A4B /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				AA1D165E2C3699A00063BC08 /* CardView.storyboard */,
+				AA1D165A2C3691570063BC08 /* CardViewController.swift */,
+				AA1D16502C368E2C0063BC08 /* CardView.swift */,
+			);
+			path = CardView;
 			sourceTree = "<group>";
 		};
 		AAAE3C552C3593110026A351 = {
@@ -90,17 +114,17 @@
 		AAAE3C602C3593110026A351 /* Language */ = {
 			isa = PBXGroup;
 			children = (
+				AA19222F2C3D1922005F8A4B /* Model */,
 				AAF5CFB92C37F2FE00013D3C /* Managers */,
-				AA1D16522C368EE50063BC08 /* Word.swift */,
-				AA1D16502C368E2C0063BC08 /* CardView.swift */,
+				AA1922302C3D193D005F8A4B /* CardView */,
 				AAAE3C612C3593110026A351 /* AppDelegate.swift */,
 				AAAE3C632C3593110026A351 /* SceneDelegate.swift */,
 				AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */,
 				AAAE3C652C3593110026A351 /* ViewController.swift */,
-				AA1D165A2C3691570063BC08 /* CardViewController.swift */,
 				AAAE3C672C3593110026A351 /* Main.storyboard */,
+				AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */,
+				AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */,
 				AAAE3C6C2C3593130026A351 /* LaunchScreen.storyboard */,
-				AA1D165E2C3699A00063BC08 /* CardView.storyboard */,
 				AA4A28032C3BD6B700AAB738 /* MyWordsView.storyboard */,
 				AA4A28012C3BD67C00AAB738 /* TableCell.swift */,
 				AA4A280C2C3BDBEB00AAB738 /* NewWordsViewController.swift */,
@@ -116,6 +140,7 @@
 			children = (
 				AA0A58C32C36C0A9006EC9CE /* WordManager.swift */,
 				AAF5CFBA2C37F32A00013D3C /* YandexDictManager.swift */,
+				AA19222B2C3D08AB005F8A4B /* AuthManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -138,7 +163,7 @@
 			name = Language;
 			packageProductDependencies = (
 				AA0A58C92C36F9FC006EC9CE /* FirebaseAuth */,
-				AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */,
+				AA19222D2C3D1593005F8A4B /* FirebaseFirestore */,
 			);
 			productName = Language;
 			productReference = AAAE3C5E2C3593110026A351 /* Language.app */;
@@ -187,6 +212,7 @@
 			files = (
 				AAAE3C6B2C3593130026A351 /* Assets.xcassets in Resources */,
 				AAAE3C6E2C3593130026A351 /* Base in Resources */,
+				AA1922282C3D0761005F8A4B /* AuthorizationViewController.storyboard in Resources */,
 				AA0A58C62C36F89F006EC9CE /* GoogleService-Info.plist in Resources */,
 				AA4A28042C3BD6B700AAB738 /* MyWordsView.storyboard in Resources */,
 				AAAE3C692C3593110026A351 /* Base in Resources */,
@@ -201,8 +227,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA19222A2C3D0769005F8A4B /* AuthorizationViewController.swift in Sources */,
 				AA1D16532C368EE50063BC08 /* Word.swift in Sources */,
 				AA4A280B2C3BDBB700AAB738 /* WordsViewController.swift in Sources */,
+				AA19222C2C3D08AB005F8A4B /* AuthManager.swift in Sources */,
 				AA4A280D2C3BDBEB00AAB738 /* NewWordsViewController.swift in Sources */,
 				AA0A58C42C36C0A9006EC9CE /* WordManager.swift in Sources */,
 				AAF5CFBB2C37F32A00013D3C /* YandexDictManager.swift in Sources */,
@@ -452,10 +480,10 @@
 			package = AA0A58C72C36F9BF006EC9CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		AA4A280E2C3C004C00AAB738 /* FirebaseDatabase */ = {
+		AA19222D2C3D1593005F8A4B /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AA0A58C72C36F9BF006EC9CE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

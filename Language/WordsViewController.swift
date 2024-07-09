@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class WordsViewController: UIViewController, NewWordDelegate {
     
@@ -14,7 +15,8 @@ class WordsViewController: UIViewController, NewWordDelegate {
     @IBOutlet weak var DeleteWordsButton: UIBarButtonItem!
     @IBOutlet weak var NewWordButton: UIBarButtonItem!
     private let wordManager = WordManager.shared
-
+    private let authManager = AuthManager.shared
+    
     // MARK: - Properties
     var dataSource: [Word] = []
     
@@ -24,20 +26,45 @@ class WordsViewController: UIViewController, NewWordDelegate {
         tableView.layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(clear), name: .removeAll, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadWords()
+
+        authManager.addAuthStateDidChangeListener { [weak self] user in
+            if user == nil {
+                self?.showAuthorizationAlert()
+            }
+        }
     }
     
     // MARK: - Actions
     @IBAction func DeleteWordsButtonTapped(_ sender: Any) {
         dataSource = []
-        wordManager.words = []
-        wordManager.saveWordsToUserDefaults()
+        wordManager.removeAll()
         tableView.reloadData()
         NotificationCenter.default.post(name: .didDeleteWords, object: nil)
     }
-
+    
+    @objc private func clear() {
+        dataSource = []
+        wordManager.removeAll()
+        tableView.reloadData()
+        NotificationCenter.default.post(name: .didDeleteWords, object: nil)
+    }
+    
     @IBAction func NewWordButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "MyNewWords", sender: self)
+    }
+    
+    private func showAuthorizationAlert() {
+        let alert = UIAlertController(title: "Ошибка", message: "Войдите в аккаунт, чтобы продолжить", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ОК", style: .default) {_ in
+            self.tabBarController?.selectedIndex = 2
+        })
+        present(alert, animated: true)
     }
     
     // MARK: - Navigation
@@ -47,16 +74,17 @@ class WordsViewController: UIViewController, NewWordDelegate {
             destinationVC.delegate = self
         }
     }
-
+    
     // MARK: - Data Source Management
     func didAddNewWord(_ word: Word) {
         dataSource.append(word)
+        wordManager.addWord(word)
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
         NotificationCenter.default.post(name: .didAddNewWord, object: nil, userInfo: ["word": word])
     }
-
+    
     func loadWords() {
         wordManager.loadWords { [weak self] result in
             switch result {
@@ -97,4 +125,6 @@ extension WordsViewController: UITableViewDelegate {
 extension Notification.Name {
     static let didAddNewWord = Notification.Name("didAddNewWord")
     static let didDeleteWords = Notification.Name("didDeleteWords")
+    static let removeAll = Notification.Name("removeAll")
 }
+

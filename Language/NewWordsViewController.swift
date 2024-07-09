@@ -28,6 +28,7 @@ class NewWordsViewController: UIViewController {
               !newSpelling.isEmpty, !newTranslation.isEmpty else { return }
 
         let newWord = Word(spelling: newSpelling, translation: newTranslation)
+        
         delegate?.didAddNewWord(newWord)
         translateLabel.text = ""
         wordTextField.text = ""
