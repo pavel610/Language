@@ -61,9 +61,6 @@ class AuthManager {
 
     // Выход пользователя
     func logout() throws{
-        WordManager.shared.saveWordsToFirestore { error in
-            
-        }
         try auth.signOut()
     }
 

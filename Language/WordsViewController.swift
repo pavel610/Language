@@ -23,6 +23,7 @@ class WordsViewController: UIViewController, NewWordDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
@@ -32,7 +33,6 @@ class WordsViewController: UIViewController, NewWordDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadWords()
-
         authManager.addAuthStateDidChangeListener { [weak self] user in
             if user == nil {
                 self?.showAuthorizationAlert()
@@ -50,7 +50,7 @@ class WordsViewController: UIViewController, NewWordDelegate {
     
     @objc private func clear() {
         dataSource = []
-        wordManager.removeAll()
+        wordManager.removeAllExceptFirestore()
         tableView.reloadData()
         NotificationCenter.default.post(name: .didDeleteWords, object: nil)
     }
@@ -89,6 +89,7 @@ class WordsViewController: UIViewController, NewWordDelegate {
         wordManager.loadWords { [weak self] result in
             switch result {
             case .success(let words):
+                self?.dataSource = []
                 self?.dataSource = words
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()

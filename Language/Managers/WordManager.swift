@@ -1,6 +1,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import Network
 
 class WordManager {
     
@@ -12,13 +13,30 @@ class WordManager {
     var words: [Word] = []
     
     private init() {}
-    
-    func loadWords(completion: @escaping (Result<[Word], Error>) -> Void) {        
+
+    func loadWords(completion: @escaping (Result<[Word], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])))
             return
         }
         
+        let monitor = NWPathMonitor()
+        let queue = DispatchQueue(label: "InternetConnectionMonitor")
+        monitor.start(queue: queue)
+        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                // Интернет доступен, загружаем данные из Firestore
+                self.loadWordsFromFirestore(userId: userId, completion: completion)
+            } else {
+                // Интернет недоступен, загружаем данные из UserDefaults
+                self.loadWordsFromUserDefaults(completion: completion)
+            }
+            monitor.cancel() // Останавливаем мониторинг после выполнения проверки
+        }
+    }
+
+    private func loadWordsFromFirestore(userId: String, completion: @escaping (Result<[Word], Error>) -> Void) {
         firestore.collection("users").document(userId).collection("words").getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -33,25 +51,27 @@ class WordManager {
                     loadedWords.append(word)
                 }
             }
-            print("firestore")
 
             self.words = loadedWords
             self.saveWordsToUserDefaults()
             completion(.success(loadedWords))
-            return
         }
-        
+    }
+
+    private func loadWordsFromUserDefaults(completion: @escaping (Result<[Word], Error>) -> Void) {
         if let savedWords = userDefaults.object(forKey: wordsKey) as? Data {
             let decoder = JSONDecoder()
             if let loadedWords = try? decoder.decode([Word].self, from: savedWords) {
-                print("userdefaults")
-                print(loadedWords)
                 words = loadedWords
                 completion(.success(loadedWords))
-                return
+            } else {
+                completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to decode words from UserDefaults"])))
             }
+        } else {
+            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No words found in UserDefaults"])))
         }
     }
+
     
     func saveWordsToUserDefaults() {
         let encoder = JSONEncoder()
@@ -70,8 +90,6 @@ class WordManager {
     }
     
     func saveWordsToFirestore(completion: @escaping (Error?) -> Void) {
-        print("saveWordsToFirestore")
-        print(words)
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
             return
@@ -79,50 +97,48 @@ class WordManager {
         
         let wordsCollection = firestore.collection("users").document(userId).collection("words")
         
-        
-        let batch = firestore.batch()
-        
-        // Добавление новых данных
-        self.words.forEach { word in
-            let docRef = wordsCollection.document()
-            batch.setData([
-                "spelling": word.spelling,
-                "translation": word.translation
-            ], forDocument: docRef)
-        }
-        
-        batch.commit { error in
-            completion(error)
-        }
-        
-    }
-    
-    func deleteFirestore(completion: @escaping (Error?) -> Void) {
-        print("saveWordsToFirestore")
-        print(words)
-        guard let userId = Auth.auth().currentUser?.uid else {
-            completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
-            return
-        }
-        
-        let wordsCollection = firestore.collection("users").document(userId).collection("words")
-        
-        
-        let batch = firestore.batch()
-        
-        // Добавление новых данных
+        // Step 1: Delete all existing documents
         wordsCollection.getDocuments { snapshot, error in
             if let error = error {
                 completion(error)
                 return
             }
             
-            // Удаление старых данных
-            snapshot?.documents.forEach { document in
-                batch.deleteDocument(document.reference)
+            guard let documents = snapshot?.documents else {
+                completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No documents found"]))
+                return
+            }
+            
+            let deleteBatch = self.firestore.batch()
+            documents.forEach { document in
+                deleteBatch.deleteDocument(document.reference)
+            }
+            
+            deleteBatch.commit { [self] error in
+                if let error = error {
+                    completion(error)
+                    return
+                }
+                
+                // Step 2: Add new documents
+                let addBatch = firestore.batch()
+                self.words.forEach { word in
+                    let docId = "\(word.spelling.hashValue)"
+                    let docRef = wordsCollection.document(docId)
+                    addBatch.setData([
+                        "spelling": word.spelling,
+                        "translation": word.translation
+                    ], forDocument: docRef)
+                }
+                
+                addBatch.commit { error in
+                    completion(error)
+                }
             }
         }
     }
+
+    
     
     func addWord(_ word: Word) {
         words.append(word)
@@ -135,12 +151,42 @@ class WordManager {
     func removeAll() {
         words.removeAll ()
         saveWordsToUserDefaults()
-        saveWordsToFirestore { _ in
+        deleteAllWordsFromFirestore { _ in
             
         }
+    }
+    
+    func removeAllExceptFirestore(){
+        words.removeAll ()
+        saveWordsToUserDefaults()
     }
     
     func clearUserDefaults() {
         userDefaults.set(nil, forKey: wordsKey)
     }
+    
+    func deleteAllWordsFromFirestore(completion: @escaping (Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"]))
+            return
+        }
+        
+        firestore.collection("users").document(userId).collection("words").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            let batch = self.firestore.batch()
+            
+            for document in querySnapshot!.documents {
+                batch.deleteDocument(document.reference)
+            }
+            
+            batch.commit { error in
+                completion(error)
+            }
+        }
+    }
+
 }
