@@ -34,7 +34,7 @@
 /* Begin PBXFileReference section */
 		AA0A58C32C36C0A9006EC9CE /* WordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManager.swift; sourceTree = "<group>"; };
 		AA0A58C52C36F89F006EC9CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AuthorizationViewController.storyboard; path = "../../../Downloads/Language-auth/Language/AuthorizationViewController.storyboard"; sourceTree = "<group>"; };
+		AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AuthorizationViewController.storyboard; sourceTree = "<group>"; };
 		AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		AA19222B2C3D08AB005F8A4B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		AA1D16502C368E2C0063BC08 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -87,6 +87,7 @@
 		AA1922302C3D193D005F8A4B /* CardView */ = {
 			isa = PBXGroup;
 			children = (
+				AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */,
 				AA1D165E2C3699A00063BC08 /* CardView.storyboard */,
 				AA1D165A2C3691570063BC08 /* CardViewController.swift */,
 				AA1D16502C368E2C0063BC08 /* CardView.swift */,
@@ -122,7 +123,6 @@
 				AA4A280A2C3BDBB700AAB738 /* WordsViewController.swift */,
 				AAAE3C652C3593110026A351 /* ViewController.swift */,
 				AAAE3C672C3593110026A351 /* Main.storyboard */,
-				AA1922292C3D0769005F8A4B /* AuthorizationViewController.swift */,
 				AA1922272C3D0761005F8A4B /* AuthorizationViewController.storyboard */,
 				AAAE3C6C2C3593130026A351 /* LaunchScreen.storyboard */,
 				AA4A28032C3BD6B700AAB738 /* MyWordsView.storyboard */,
