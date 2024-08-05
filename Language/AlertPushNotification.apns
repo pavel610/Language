@@ -1,0 +1,8 @@
+{
+    "Simulator Target Bundle": "com.kalininpavel.Language",
+    "aps": {
+        "alert": "Hello World",
+        "sound": "default"，
+        "badge": 1
+    }
+}

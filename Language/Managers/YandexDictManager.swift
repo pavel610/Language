@@ -4,7 +4,7 @@ class YandexDictManager {
     private let apiKey = "dict.1.1.20240703T175555Z.4dfd377513776e4f.d4b5d7807642f9b3cbd2775a69c80eeb27546088" 
     private let apiUrl = "https://dictionary.yandex.net/api/v1/dicservice.json/lookup"
     
-    func lookup(word: String, language: String, completion: @escaping (Result<DictionaryResponse, Error>) -> Void) {
+    func lookup(word: String, language: String, completion: @escaping (Result<DictionaryResponse, Error>)  -> Void){
         guard var urlComponents = URLComponents(string: apiUrl) else {
             return
         }

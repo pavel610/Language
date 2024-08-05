@@ -33,13 +33,15 @@ class CardView: UIView {
         spellingLabel.frame = self.bounds
         translationLabel.frame = self.bounds
         translationLabel.isHidden = true
-        
-        layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
+
+        backgroundColor = .white
+        layer.borderWidth = 2
         layer.cornerRadius = 10
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.05
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowRadius = 2
+
         
         spellingLabel.translatesAutoresizingMaskIntoConstraints = false
         spellingLabel.textAlignment = .center

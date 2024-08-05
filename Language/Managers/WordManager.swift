@@ -2,6 +2,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import Network
+import Combine
 
 class WordManager {
     
@@ -10,9 +11,17 @@ class WordManager {
     private let userDefaults = UserDefaults.standard
     private let wordsKey = "words"
     
-    var words: [Word] = []
+    @Published var words: [Word] = []
     
-    private init() {}
+    private init() {
+        loadWords { result in
+            
+        }
+    }
+    
+    func getWords() -> [Word]{
+        words
+    }
 
     func loadWords(completion: @escaping (Result<[Word], Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {

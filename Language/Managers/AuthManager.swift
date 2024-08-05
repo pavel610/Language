@@ -13,20 +13,8 @@ class AuthManager {
     private let auth = Auth.auth()
     private init() {}
     
-    // Регистрация пользователя
-    func register(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        auth.createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            if let user = authResult?.user {
-                completion(.success(user))
-            }
-        }
-    }
     
-    func register(email: String, password: String, displayName: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func register(email: String, password: String, displayName: String, completion: @escaping (Result<User, Error>) -> Void){
         auth.createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 completion(.failure(error))
@@ -45,9 +33,8 @@ class AuthManager {
             }
         }
     }
-
-    // Логин пользователя
-    func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+    
+    func signIn(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         auth.signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 completion(.failure(error))
@@ -58,18 +45,15 @@ class AuthManager {
             }
         }
     }
-
-    // Выход пользователя
+    
     func logout() throws{
         try auth.signOut()
     }
-
-    // Получение текущего пользователя
+    
     func getCurrentUser() -> User? {
         return auth.currentUser
     }
-
-    // Добавление слушателя изменений состояния аутентификации
+    
     func addAuthStateDidChangeListener(listener: @escaping (User?) -> Void) {
         auth.addStateDidChangeListener { _, user in
             listener(user)
@@ -77,3 +61,4 @@ class AuthManager {
     }
     
 }
+

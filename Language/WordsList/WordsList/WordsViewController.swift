@@ -14,42 +14,44 @@ class WordsViewController: UIViewController, NewWordDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var DeleteWordsButton: UIBarButtonItem!
     @IBOutlet weak var NewWordButton: UIBarButtonItem!
+    lazy var indicator: UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     private let wordManager = WordManager.shared
     private let authManager = AuthManager.shared
-    
-    // MARK: - Properties
-    var dataSource: [Word] = []
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.layer.backgroundColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         tableView.dataSource = self
         tableView.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(clear), name: .removeAll, object: nil)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loadWords()
-        authManager.addAuthStateDidChangeListener { [weak self] user in
-            if user == nil {
-                self?.showAuthorizationAlert()
-            }
-        }
-    }
+
     
     // MARK: - Actions
+    private func setupIndicator() {
+        view.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            indicator.widthAnchor.constraint(equalToConstant: 30),
+            indicator.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        indicator.startAnimating()
+    }
+    
     @IBAction func DeleteWordsButtonTapped(_ sender: Any) {
-        dataSource = []
         wordManager.removeAll()
         tableView.reloadData()
         NotificationCenter.default.post(name: .didDeleteWords, object: nil)
     }
     
     @objc private func clear() {
-        dataSource = []
         wordManager.removeAllExceptFirestore()
         tableView.reloadData()
         NotificationCenter.default.post(name: .didDeleteWords, object: nil)
@@ -57,14 +59,6 @@ class WordsViewController: UIViewController, NewWordDelegate {
     
     @IBAction func NewWordButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "MyNewWords", sender: self)
-    }
-    
-    private func showAuthorizationAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Войдите в аккаунт, чтобы продолжить", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default) {_ in
-            self.tabBarController?.selectedIndex = 2
-        })
-        present(alert, animated: true)
     }
     
     // MARK: - Navigation
@@ -77,41 +71,25 @@ class WordsViewController: UIViewController, NewWordDelegate {
     
     // MARK: - Data Source Management
     func didAddNewWord(_ word: Word) {
-        dataSource.append(word)
         wordManager.addWord(word)
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
         NotificationCenter.default.post(name: .didAddNewWord, object: nil, userInfo: ["word": word])
     }
-    
-    func loadWords() {
-        wordManager.loadWords { [weak self] result in
-            switch result {
-            case .success(let words):
-                self?.dataSource = []
-                self?.dataSource = words
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure(let error):
-                print("Failed to load words: \(error.localizedDescription)")
-            }
-        }
-    }
 }
 
 // MARK: - UITableViewDataSource
 extension WordsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return wordManager.getWords().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as? TableCell else {
             return UITableViewCell()
         }
-        cell.config(word: dataSource[indexPath.row])
+        cell.config(word: wordManager.getWords()[indexPath.row])
         return cell
     }
 }
@@ -124,8 +102,8 @@ extension WordsViewController: UITableViewDelegate {
 }
 
 extension Notification.Name {
-    static let didAddNewWord = Notification.Name("didAddNewWord")
-    static let didDeleteWords = Notification.Name("didDeleteWords")
-    static let removeAll = Notification.Name("removeAll")
+    public static let didAddNewWord = Notification.Name("didAddNewWord")
+    public static let didDeleteWords = Notification.Name("didDeleteWords")
+    public static let removeAll = Notification.Name("removeAll")
 }
 

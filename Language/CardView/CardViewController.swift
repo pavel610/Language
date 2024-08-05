@@ -1,7 +1,6 @@
 import UIKit
 
 class CardViewController: UIViewController {
-    private let authManager = AuthManager.shared
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var remeberLabel: UILabel!
     
@@ -32,9 +31,9 @@ class CardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNewWordNotification(_:)), name: .didAddNewWord, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDeleteWordsNotification), name: .didDeleteWords, object: nil)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,19 +41,6 @@ class CardViewController: UIViewController {
         loadCards()
         setupIfEmptyLabel()
         setupRetryButton()
-        authManager.addAuthStateDidChangeListener { [weak self] user in
-            if user == nil {
-                self?.showAuthorizationAlert()
-            }
-        }
-    }
-    
-    private func showAuthorizationAlert() {
-        let alert = UIAlertController(title: "Ошибка", message: "Войдите в аккаунт, чтобы продолжить", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default) {_ in
-            self.tabBarController?.selectedIndex = 2
-        })
-        present(alert, animated: true)
     }
     
     private func setupIfEmptyLabel() {
@@ -87,6 +73,7 @@ class CardViewController: UIViewController {
         clearCards()
         checkIfEmpty()
     }
+    
     
     @objc private func didReceiveNewWordNotification(_ notification: Notification) {
         guard let userInfo = notification.userInfo, let word = userInfo["word"] as? Word else { return }
@@ -127,7 +114,6 @@ class CardViewController: UIViewController {
     }
     
     private func setupCards(with words: [Word]) {
-        print(words)
         for word in words.reversed() {
             addCard(with: word)
         }
@@ -214,12 +200,16 @@ class CardViewController: UIViewController {
     }
     
     private func checkIfEmpty() {
-        if cardViews.isEmpty {
+        if cardViews.isEmpty && !WordManager.shared.getWords().isEmpty{
             ifEmptyLabel.isHidden = false
             retryButton.isHidden = false
+            
         } else {
             ifEmptyLabel.isHidden = true
             retryButton.isHidden = true
         }
     }
+    
+
 }
+
